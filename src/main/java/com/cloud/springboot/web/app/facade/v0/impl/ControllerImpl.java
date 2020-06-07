@@ -12,12 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cloud.springboot.web.app.models.entity.DetalleFactura;
@@ -66,11 +66,8 @@ public class ControllerImpl {
 	@GetMapping("/form")
 	public String creacionFactura(Model model) {
 
-		Factura factura = new Factura();
-		DetalleFactura detalle = new DetalleFactura();
-
-		model.addAttribute("factura", factura);
-		model.addAttribute("detalle", detalle);
+		model.addAttribute("factura", new Factura());
+		model.addAttribute("detalle", new DetalleFactura());
 		model.addAttribute("titulo", "Crear Factura");
 		model.addAttribute("productos", listProductos());
 
@@ -78,14 +75,17 @@ public class ControllerImpl {
 
 	}
 
-	@PostMapping("/form/new")
-	public String createFactura(@Valid Factura factura, BindingResult result, DetalleFactura detalle, Model model, RedirectAttributes flash,
+	@PostMapping("/form")
+	public String createFactura(@Valid @ModelAttribute("factura") Factura factura, BindingResult result,@Valid @ModelAttribute("detalle") DetalleFactura detalle, BindingResult resultDetalle, Model model, RedirectAttributes flash,
 			SessionStatus status) {
 		
-		LOGGER.info(Boolean.toString(result.hasErrors()));
-		LOGGER.info(factura.toString());
-		if (result.hasErrors()) {
+		LOGGER.info(resultDetalle.getAllErrors().toString());
+		LOGGER.info(resultDetalle.getAllErrors().toString());
+		if (result.hasErrors() || resultDetalle.hasErrors()) {
 			model.addAttribute("titulo", "Crear Factura");
+			model.addAttribute("factura", factura);
+			model.addAttribute("detalle", detalle);
+			model.addAttribute("productos", listProductos());
 			return "form";
 		}
 
