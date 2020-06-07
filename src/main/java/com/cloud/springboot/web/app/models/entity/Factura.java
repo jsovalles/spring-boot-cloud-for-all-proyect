@@ -17,6 +17,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -38,6 +39,7 @@ public class Factura implements Serializable {
 	@Column(name = "created_at")
 	private Date createdAt;
 	
+	@Valid
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "factura_id")
 	private List<DetalleFactura> detalles;

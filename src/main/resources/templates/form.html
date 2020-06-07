@@ -21,7 +21,7 @@
 								class="form-control" th:errorclass="'form-control is-invalid'" />
 							<div class="invalid-feedback"
 								th:if="${#fields.hasErrors('factura.descripcion')}"
-								th:errors="*{descripcion}"></div>
+								th:errors="${factura.descripcion}"></div>
 						</div>
 					</div>
 

@@ -28,7 +28,7 @@ import com.cloud.springboot.web.app.models.service.IService;
 @Controller
 @RequestMapping("/facturas")
 @SessionAttributes("factura")
-public class ControllerImpl implements WebMvcConfigurer {
+public class ControllerImpl {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ControllerImpl.class);
 
@@ -68,12 +68,9 @@ public class ControllerImpl implements WebMvcConfigurer {
 
 		Factura factura = new Factura();
 		DetalleFactura detalle = new DetalleFactura();
-		
-		List<DetalleFactura> lista = new ArrayList<>();
 
 		model.addAttribute("factura", factura);
 		model.addAttribute("detalle", detalle);
-		model.addAttribute("lista", lista);
 		model.addAttribute("titulo", "Crear Factura");
 		model.addAttribute("productos", listProductos());
 
@@ -82,7 +79,7 @@ public class ControllerImpl implements WebMvcConfigurer {
 	}
 
 	@PostMapping("/form/new")
-	public String createFactura(@Valid Factura factura, BindingResult result, DetalleFactura detalleFactura, Model model, RedirectAttributes flash,
+	public String createFactura(@Valid Factura factura, BindingResult result, DetalleFactura detalle, Model model, RedirectAttributes flash,
 			SessionStatus status) {
 		
 		LOGGER.info(Boolean.toString(result.hasErrors()));
@@ -93,7 +90,7 @@ public class ControllerImpl implements WebMvcConfigurer {
 		}
 
 		factura.setDetalles(new ArrayList<>());
-		factura.getDetalles().add(detalleFactura);
+		factura.getDetalles().add(detalle);
 		service.createFactura(factura);
 		status.setComplete();
 
