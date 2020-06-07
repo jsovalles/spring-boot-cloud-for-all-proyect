@@ -18,6 +18,12 @@ heroku logs -- logs for the application if it has any error such as 400 or 500
 
 heroku logs --tail (permanent log)
 
+heroku addons:create cleardb:ignite (creating mySQL database on Heroku)
+
+heroku config | findstr CLEARDB_DATABASE_URL (getting the information of the database)
+
+git push heroku master (pushing and deploying app on Heroku)
+
 ```
 
 # Desarrollado en
