@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<table id="tabla-productos" class="table table-striped">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>Descripción</th>
+							<th>Observación</th>
+							<th>Fecha</th>
+							<th>eliminar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="factura: ${facturas}">
+							<td><a class="btn btn-primary btn-xs"
+								th:href="@{/facturas/} + ${factura.id}" th:text="${factura.id}"></a></td>
+							<td th:text="${factura.descripcion}"></td>
+							<td th:text="${factura.observacion}"></td>
+							<td th:text="${factura.createdAt}"></td>
+							<td><a class="btn btn-danger btn-sm"
+								th:href="@{/facturas/delete/} + ${factura.id}" th:text="'eliminar'"
+								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+
+				</table>
+				<a class="btn btn-success btn-sm" th:href="@{/facturas/form}"
+					th:text="'crear factura'"></a>
+			</div>
+		</div>
+
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
