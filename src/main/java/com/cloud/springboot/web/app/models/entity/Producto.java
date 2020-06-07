@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "productos")
@@ -25,6 +27,7 @@ public class Producto implements Serializable {
 	
 	private Double precio;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name = "created_at")
 	private Date createdAt;
 	
